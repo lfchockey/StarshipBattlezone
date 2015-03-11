@@ -23,6 +23,7 @@ class Starship {
     let TOTAL_MISSILES = 10
     var life = 20
     var name = ""
+    var imageName = ""
     var playerNumber = 0
     
     // Constructor
@@ -72,7 +73,7 @@ class Starship {
             
         }
 
-        //println(Game.🚀1.sprite)
+        println("setSpirte(\(playerNumber)) \(Game.🚀1.sprite)")
       
     }
     

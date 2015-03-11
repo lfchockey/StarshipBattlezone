@@ -21,6 +21,8 @@ class GameScene: SKScene {
         
         Game.🚀1.viewSize = CGPoint(x: self.frame.width, y: self.frame.height)
         Game.🚀2.viewSize = CGPoint(x: self.frame.width, y: self.frame.height)
+        Game.🚀1.setSprite(Game.🚀1.imageName) // Added these two lines which makes the image no longer appear
+        Game.🚀2.setSprite(Game.🚀2.imageName)
         self.addChild(Game.🚀1.sprite)
         self.addChild(Game.🚀2.sprite)
         
@@ -34,8 +36,8 @@ class GameScene: SKScene {
             self.addChild(Game.🚀2.missiles[i].sprite)
         }
 
-        println(Game.🚀1.sprite)
-        println(Game.🚀2.sprite)
+        println("didMoveTo(1) \(Game.🚀1.sprite)")
+        println("didMoveTo(2) \(Game.🚀2.sprite)")
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {

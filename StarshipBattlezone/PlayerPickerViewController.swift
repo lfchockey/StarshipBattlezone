@@ -74,12 +74,14 @@ class PlayerPickerViewController: UIViewController, UIPickerViewDelegate {
         if Player1PickerView == pickerView
         {
             Game.🚀1.name = students[row]
-            Game.🚀1.setSprite(imageNames[row])
+            Game.🚀1.imageName = imageNames[row]
+            //Game.🚀1.setSprite(imageNames[row])
         }
         else
         {
             Game.🚀2.name = students[row]
-            Game.🚀2.setSprite(imageNames[row])
+            Game.🚀2.imageName = imageNames[row]
+            //Game.🚀2.setSprite(imageNames[row])
         }
         
                 
