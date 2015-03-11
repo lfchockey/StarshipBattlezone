@@ -27,6 +27,7 @@ class GameScene: SKScene {
         
         self.addChild(Game.🚀1.sprite)
         self.addChild(Game.🚀2.sprite)
+    
         //println(Game.🚀1.sprite)
         //println("------")
         
@@ -39,8 +40,8 @@ class GameScene: SKScene {
             Game.🚀1.missiles[i].tankSize = Game.🚀1.sprite.size
             Game.🚀2.missiles[i].tankSize = Game.🚀2.sprite.size
             
-            Game.🚀1.missiles[i].setSprite()
-            Game.🚀2.missiles[i].setSprite()
+            Game.🚀1.missiles[i].setSprite(i)
+            Game.🚀2.missiles[i].setSprite(i)
             
             
             self.addChild(Game.🚀1.missiles[i].sprite) // This is the line that causes the touch to be disabled

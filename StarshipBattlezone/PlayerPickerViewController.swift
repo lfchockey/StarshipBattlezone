@@ -11,7 +11,7 @@ import SpriteKit
 
 // Create the global 'Game' variables we'll be using throughout the game.
 struct Game {
-    static var 🚀1 = Starship(playerNum: 1)
+    static var 🚀1 = Starship(playerNum: 1) 
     static var 🚀2 = Starship(playerNum: 2)
     //static var player1Name: String = "Griffin Atkinson"
     //static var player2Name: String = "Griffin Atkinson"
