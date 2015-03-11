@@ -15,6 +15,9 @@
 		F1BFC4461AAFA9B200CFDC83 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1BFC4451AAFA9B200CFDC83 /* Images.xcassets */; };
 		F1BFC4491AAFA9B200CFDC83 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1BFC4471AAFA9B200CFDC83 /* LaunchScreen.xib */; };
 		F1BFC4551AAFA9B200CFDC83 /* StarshipBattlezoneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BFC4541AAFA9B200CFDC83 /* StarshipBattlezoneTests.swift */; };
+		F1BFC45F1AAFAB5300CFDC83 /* PlayerPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BFC45E1AAFAB5300CFDC83 /* PlayerPickerViewController.swift */; };
+		F1BFC4611AAFB05600CFDC83 /* Starship.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BFC4601AAFB05600CFDC83 /* Starship.swift */; };
+		F1BFC4651AAFB0CE00CFDC83 /* Missile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BFC4641AAFB0CE00CFDC83 /* Missile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,9 @@
 		F1BFC44E1AAFA9B200CFDC83 /* StarshipBattlezoneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StarshipBattlezoneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1BFC4531AAFA9B200CFDC83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1BFC4541AAFA9B200CFDC83 /* StarshipBattlezoneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarshipBattlezoneTests.swift; sourceTree = "<group>"; };
+		F1BFC45E1AAFAB5300CFDC83 /* PlayerPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerPickerViewController.swift; sourceTree = "<group>"; };
+		F1BFC4601AAFB05600CFDC83 /* Starship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Starship.swift; sourceTree = "<group>"; };
+		F1BFC4641AAFB0CE00CFDC83 /* Missile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Missile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,10 +91,13 @@
 				F1BFC43C1AAFA9B200CFDC83 /* GameScene.sks */,
 				F1BFC43E1AAFA9B200CFDC83 /* GameScene.swift */,
 				F1BFC4401AAFA9B200CFDC83 /* GameViewController.swift */,
+				F1BFC45E1AAFAB5300CFDC83 /* PlayerPickerViewController.swift */,
 				F1BFC4421AAFA9B200CFDC83 /* Main.storyboard */,
 				F1BFC4451AAFA9B200CFDC83 /* Images.xcassets */,
 				F1BFC4471AAFA9B200CFDC83 /* LaunchScreen.xib */,
 				F1BFC4381AAFA9B200CFDC83 /* Supporting Files */,
+				F1BFC4601AAFB05600CFDC83 /* Starship.swift */,
+				F1BFC4641AAFB0CE00CFDC83 /* Missile.swift */,
 			);
 			path = StarshipBattlezone;
 			sourceTree = "<group>";
@@ -220,7 +229,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1BFC43F1AAFA9B200CFDC83 /* GameScene.swift in Sources */,
+				F1BFC4611AAFB05600CFDC83 /* Starship.swift in Sources */,
 				F1BFC4411AAFA9B200CFDC83 /* GameViewController.swift in Sources */,
+				F1BFC45F1AAFAB5300CFDC83 /* PlayerPickerViewController.swift in Sources */,
+				F1BFC4651AAFB0CE00CFDC83 /* Missile.swift in Sources */,
 				F1BFC43B1AAFA9B200CFDC83 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -347,6 +359,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = StarshipBattlezone/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -357,6 +370,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = StarshipBattlezone/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -415,6 +429,7 @@
 				F1BFC45A1AAFA9B200CFDC83 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F1BFC45B1AAFA9B200CFDC83 /* Build configuration list for PBXNativeTarget "StarshipBattlezoneTests" */ = {
 			isa = XCConfigurationList;
@@ -423,6 +438,7 @@
 				F1BFC45D1AAFA9B200CFDC83 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
