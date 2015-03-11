@@ -23,7 +23,12 @@ class Missile {
         sprite = SKSpriteNode(imageNamed:"Missile")
         self.sprite.xScale = 0.1
         self.sprite.yScale = 0.1
+        self.sprite.position = CGPoint(x: 100, y: 200)
         
+    }
+    
+    func setSprite() {
+     
         sprite.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "Missile"), size: sprite.size)
         if let physics = sprite.physicsBody {
             physics.affectedByGravity = false
@@ -31,6 +36,7 @@ class Missile {
         }
         
     }
+
 
     func setSpeed (newSpeed: CGPoint, newPosition: CGPoint) {
     

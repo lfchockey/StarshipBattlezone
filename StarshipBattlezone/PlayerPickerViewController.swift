@@ -28,16 +28,19 @@ class PlayerPickerViewController: UIViewController, UIPickerViewDelegate {
     var students = ["Mr Black", "Griffin Atkinson", "James Bleau", "Griffon Charron", "Brayden Doyle", "Matt Falkner", "Jared Hayes", "Brayden Konink", "Daniel MacCormick", "Quinton MacDougall", "C.J. Wright"]
     var imageNames: [String] = []
    
-    
+    // Do any additional setup after loading the view.
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        // Map all of the names from the 'students' array into an 'imageNames' array
         imageNames = students.map {("Starship-\($0)")}
+        // Start assigning properties of the Starships
         Game.🚀1.name = imageNames[0]
+        Game.🚀1.imageName = imageNames[0]
         Game.🚀2.name = imageNames[0]
-        Game.🚀1.setSprite(imageNames[0])
-        Game.🚀2.setSprite(imageNames[0])
-        //println(Game.🚀1.sprite)
+        Game.🚀2.imageName = imageNames[0]
+        Game.🚀1.setSprite(Game.🚀1.imageName)
+        Game.🚀2.setSprite(Game.🚀2.imageName)
 
     }
 

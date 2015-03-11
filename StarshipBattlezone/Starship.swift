@@ -37,9 +37,7 @@ class Starship {
 //            physics.allowsRotation = true
 //        }
 
-        self.sprite.xScale = 0.1
-        self.sprite.yScale = 0.1
-        self.sprite.zRotation = CGFloat(M_PI)
+        
                 
         // Initialize all of the missile objects
         for i in 0..<TOTAL_MISSILES {
@@ -56,9 +54,10 @@ class Starship {
     }
     
     func setSprite(filename: String) {
-        sprite = SKSpriteNode(imageNamed: filename)
+
+        sprite = SKSpriteNode(imageNamed: imageName)
         
-        sprite.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: filename), size: sprite.size)
+        sprite.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: imageName), size: sprite.size)
         if let physics = sprite.physicsBody {
             physics.affectedByGravity = false
             physics.allowsRotation = true
@@ -70,10 +69,11 @@ class Starship {
         else {
             self.sprite.position.x = self.viewSize.x/2
             self.sprite.position.y = self.viewSize.y - 100
-            
+            self.sprite.zRotation = CGFloat(M_PI)
         }
-
-        println("setSpirte(\(playerNumber)) \(Game.🚀1.sprite)")
+        
+        self.sprite.xScale = 0.5
+        self.sprite.yScale = 0.5
       
     }
     
