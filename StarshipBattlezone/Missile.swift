@@ -16,14 +16,17 @@ class Missile {
     var sprite = SKSpriteNode()
     var texture = SKTexture()
     var viewSize = CGPoint()    // width, height
-    var tankSize = CGSize()
+    var starshipSize = CGSize()
     var isBeingFired = false
+    var angle: Float = 0.0
+    var playerNumber = 0
     
-    init () {
+    init (playerNum: Int) {
         sprite = SKSpriteNode(imageNamed:"Missile")
-        self.sprite.xScale = 0.1
-        self.sprite.yScale = 0.1
-        //self.sprite.position = CGPoint(x: 100, y: 200)
+        self.sprite.xScale = 0.05
+        self.sprite.yScale = 0.05
+       
+        self.playerNumber = playerNum
         
     }
     
@@ -32,13 +35,26 @@ class Missile {
         sprite.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "Missile"), size: sprite.size)
         if let physics = sprite.physicsBody {
             physics.affectedByGravity = false
-            physics.allowsRotation = true
+            physics.allowsRotation = false
+            physics.linearDamping = 0.0
+            physics.angularDamping = 0.0
+            if playerNumber == 1 {
+                physics.categoryBitMask = ColliderType.Missile1.rawValue
+                physics.collisionBitMask = ColliderType.Missile1.rawValue
+                physics.contactTestBitMask = ColliderType.Missile1.rawValue
+            }
+            else {
+                physics.categoryBitMask = ColliderType.Missile2.rawValue
+                physics.collisionBitMask = ColliderType.Missile2.rawValue
+                physics.contactTestBitMask = ColliderType.Missile2.rawValue
+            }
         }
         self.sprite.position = CGPoint(x: 100 + num * 100 , y: 200)
     }
 
     func setSpeed (newSpeed: CGPoint, newPosition: CGPoint) {
     
+        
         var tempSpeedX = newSpeed.x
         var tempSpeedY = newSpeed.y
         
@@ -56,49 +72,43 @@ class Missile {
             tempSpeedY = -100
         }
         
+        //var angle: CGFloat = atan(newSpeed.y/newSpeed.x)
+        //println(angle)
         self.speed = CGPoint(x: tempSpeedX, y: tempSpeedY)
         
-        var tempPositionX = newPosition.x
-        var tempPositionY = newPosition.y
-        
+        /*
         if (speed.x >= 0 && speed.y > 0) {
-            tempPositionX = newPosition.x + self.tankSize.width / 2
-            tempPositionY = newPosition.y + self.tankSize.height / 2
             self.sprite.zRotation = CGFloat(-M_PI/4)
         }
         else if (speed.x <= 0 && speed.y > 0) {
-            tempPositionX = newPosition.x - self.tankSize.width / 2
-            tempPositionY = newPosition.y + self.tankSize.height / 2
             self.sprite.zRotation = CGFloat(M_PI/4)
         }
         else if (speed.x >= 0 && speed.y < 0) {
-            tempPositionX = newPosition.x + self.tankSize.width / 2
-            tempPositionY = newPosition.y - self.tankSize.height / 2
             self.sprite.zRotation = CGFloat(-3*M_PI/4)
         }
         else if (speed.x <= 0 && speed.y < 0) {
-            tempPositionX = newPosition.x - self.tankSize.height / 2
-            tempPositionY = newPosition.y - self.tankSize.width / 2
             self.sprite.zRotation = CGFloat(3*M_PI/4)
         }
         else {
-            tempPositionX = newPosition.x + self.tankSize.width / 2
-            tempPositionY = newPosition.y + self.tankSize.height / 2
             self.sprite.zRotation = CGFloat(M_PI/4)
         }
-        
-        self.sprite.position = CGPoint(x: tempPositionX, y: tempPositionY)
-        
+        */
+        let deltaX = Game.🚀2.sprite.position.x - Game.🚀1.sprite.position.x
+        let deltaY = Game.🚀2.sprite.position.y - Game.🚀1.sprite.position.y
+        angle = atan2f(Float(deltaY), Float(deltaX))
+        angle -= Float(M_PI/2)
+        println(angle)
+        self.sprite.zRotation = CGFloat(angle)
+        self.sprite.zRotation = CGFloat(angle)
+        self.sprite.position = newPosition
         self.sprite.physicsBody?.velocity = CGVector(dx: self.speed.x, dy: self.speed.y)
-//        let xComponent: CGFloat = newSpeed.x
-//        let yComponent: CGFloat = newSpeed.y
-//        let impulseVector = CGVector(dx: xComponent, dy: yComponent)
-//        self.sprite.physicsBody!.applyImpulse(impulseVector)
+
     }
     
     func move() {
         if (self.isBeingFired) {
             //  Check to see if bullet goes off the View
+            //println("XSprite \(sprite.position.x) - XView \(viewSize.x) - YSprite \(sprite.position.y) - YView \(viewSize.y)")
             if (self.sprite.position.x < 0 || self.sprite.position.x > self.viewSize.x || self.sprite.position.y < 0 || self.sprite.position.y > self.viewSize.y) {
                 self.isBeingFired = false
                 self.sprite.position = CGPoint(x: -50, y: -50)

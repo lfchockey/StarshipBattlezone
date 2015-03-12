@@ -16,8 +16,22 @@ struct Game {
     //static var player1Name: String = "Griffin Atkinson"
     //static var player2Name: String = "Griffin Atkinson"
 }
+
+enum ColliderType: UInt32 {
+    case Starship1 = 1
+    case Missile1 = 2
+    case Starship2 = 4
+    case Missile2 = 8
+}
+
 class PlayerPickerViewController: UIViewController, UIPickerViewDelegate {
 
+    //constants for the collision bitmap
+//    static const uint32_t starship1Category = 1 << 0;
+//    static const uint32_t missile1Category = 1 << 1;
+//    static const uint32_t starship2Category = 1 << 2;
+//    static const uint32_t starship3Category = 1 << 4;
+    
     // Connect the UIPicekrView from the Storyboard - make the IBOutlet connection
     // Make sure to also connect the UIPickerView with the ViewController in the 
     //      Storyboard as both a Delegate and Datasource.

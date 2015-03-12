@@ -28,21 +28,18 @@ class GameScene: SKScene {
         self.addChild(Game.🚀1.sprite)
         self.addChild(Game.🚀2.sprite)
     
-        //println(Game.🚀1.sprite)
-        //println("------")
-        
+
         // Add all of the Missiles as nodes to the
         for i in 0 ..< Game.🚀1.TOTAL_MISSILES {
             
             Game.🚀1.missiles[i].viewSize = parentViewSize
             Game.🚀2.missiles[i].viewSize = parentViewSize
             
-            Game.🚀1.missiles[i].tankSize = Game.🚀1.sprite.size
-            Game.🚀2.missiles[i].tankSize = Game.🚀2.sprite.size
+            Game.🚀1.missiles[i].starshipSize = Game.🚀1.sprite.size
+            Game.🚀2.missiles[i].starshipSize = Game.🚀2.sprite.size
             
             Game.🚀1.missiles[i].setSprite(i)
             Game.🚀2.missiles[i].setSprite(i)
-            
             
             self.addChild(Game.🚀1.missiles[i].sprite) // This is the line that causes the touch to be disabled
             self.addChild(Game.🚀2.missiles[i].sprite)
@@ -53,20 +50,33 @@ class GameScene: SKScene {
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         //println(touches)
+        
+        for touch: AnyObject in touches {
+            let location = touch.locationInNode(self)
+            let deltaX = location.x - Game.🚀1.sprite.position.x
+            let deltaY = location.y - Game.🚀1.sprite.position.y
+            Game.🚀1.setSpeed(CGPoint(x: 25, y: 25))
+            Game.🚀1.fire(CGPoint(x: deltaX, y: deltaY))
+        }
         myLabel.text = ""
         
-        Game.🚀1.setSpeed(CGPoint(x: 10, y: 10))
         
-        Game.🚀1.fire(CGPoint(x: -80, y: -80))
         
-        for i in 0 ..< Game.🚀1.TOTAL_MISSILES {
-            Game.🚀1.missiles[i].move()
-        }
+        //var newPos = Game.🚀1.sprite.childNodeWithName("gun")!
+        //println(newPos)
+        
+        
+
     }
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         //println(currentTime)
-        myLabel.text = ""
+        //myLabel.text = ""
+        
+        Game.🚀1.move()
+        for i in 0 ..< Game.🚀1.TOTAL_MISSILES {
+            Game.🚀1.missiles[i].move()
+        }
     }
 }
