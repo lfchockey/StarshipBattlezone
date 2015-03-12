@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let myLabel = SKLabelNode(fontNamed:"Chalkduster")
     
@@ -45,7 +45,11 @@ class GameScene: SKScene {
             self.addChild(Game.🚀2.missiles[i].sprite)
 
         }
-
+        
+        self.physicsWorld.contactDelegate = self
+        self.physicsWorld.gravity = CGVector.zeroVector
+        //println("self.physicsWorld.contactDelegate = \(self.physicsWorld.contactDelegate)")
+        
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -60,23 +64,51 @@ class GameScene: SKScene {
         }
         myLabel.text = ""
         
-        
-        
-        //var newPos = Game.🚀1.sprite.childNodeWithName("gun")!
-        //println(newPos)
-        
-        
-
+        println("Starship1 - \(Game.🚀1.sprite.physicsBody?.categoryBitMask) Starship2 - \(Game.🚀2.sprite.physicsBody?.categoryBitMask)")
+        println("Missile1 - \(Game.🚀1.missiles[0].sprite.physicsBody?.categoryBitMask) Missile2 - \(Game.🚀2.missiles[0].sprite.physicsBody?.categoryBitMask)")
     }
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        //println(currentTime)
+        //println(Game.🚀2.sprite.physicsBody?.categoryBitMask)
         //myLabel.text = ""
         
         Game.🚀1.move()
         for i in 0 ..< Game.🚀1.TOTAL_MISSILES {
             Game.🚀1.missiles[i].move()
         }
+    }
+    
+    func didBeginContact(contact: SKPhysicsContact) {
+        let firstNode = contact.bodyA.node as SKSpriteNode
+        let secondNode = contact.bodyB.node as SKSpriteNode
+        
+        println("\(firstNode.name) - \(secondNode.name)")
+        
+        
+        // Starship1 collides with Missiles from Starship2
+        if ((contact.bodyA.categoryBitMask == ColliderType.Starship1.rawValue ) &&
+        (contact.bodyB.categoryBitMask == ColliderType.Missile2.rawValue)) || ((contact.bodyA.categoryBitMask == ColliderType.Missile2.rawValue ) &&
+        (contact.bodyB.categoryBitMask == ColliderType.Starship1.rawValue)){
+            /*
+                let contactPoint = contact.contactPoint
+                let contact_y = contactPoint.y
+                let target_y = secondNode.position.y
+                let margin = secondNode.frame.size.height/2 - 25
+                
+                if (contact_y > (target_y - margin)) &&
+                    (contact_y < (target_y + margin)) {
+                        println("Hit")
+                }
+            */
+            println("Missile 2 hit Starship1")
+        }
+        
+        if ((contact.bodyA.categoryBitMask == ColliderType.Starship2.rawValue ) &&
+            (contact.bodyB.categoryBitMask == ColliderType.Missile1.rawValue)) || ((contact.bodyA.categoryBitMask == ColliderType.Missile1.rawValue ) &&
+                (contact.bodyB.categoryBitMask == ColliderType.Starship2.rawValue)){
+            println("Missile 1 hit Starship2")        
+        }
+        
     }
 }

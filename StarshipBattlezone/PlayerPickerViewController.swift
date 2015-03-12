@@ -13,8 +13,12 @@ import SpriteKit
 struct Game {
     static var 🚀1 = Starship(playerNum: 1) 
     static var 🚀2 = Starship(playerNum: 2)
-    //static var player1Name: String = "Griffin Atkinson"
-    //static var player2Name: String = "Griffin Atkinson"
+    
+    static let starship1Category : UInt32 = 0x00
+    static let missile1Category : UInt32 = 0x01
+    static let starship2Category : UInt32 = 0x02
+    static let missile2Category : UInt32 = 0x04
+    static let worldCategory : UInt32 = 0x08
 }
 
 enum ColliderType: UInt32 {
@@ -22,6 +26,7 @@ enum ColliderType: UInt32 {
     case Missile1 = 2
     case Starship2 = 4
     case Missile2 = 8
+    case Space = 16
 }
 
 class PlayerPickerViewController: UIViewController, UIPickerViewDelegate {
@@ -53,8 +58,8 @@ class PlayerPickerViewController: UIViewController, UIPickerViewDelegate {
         Game.🚀1.imageName = imageNames[0]
         Game.🚀2.name = imageNames[0]
         Game.🚀2.imageName = imageNames[0]
-        Game.🚀1.setSprite(Game.🚀1.imageName)
-        Game.🚀2.setSprite(Game.🚀2.imageName)
+        //Game.🚀1.setSprite(Game.🚀1.imageName)
+        //Game.🚀2.setSprite(Game.🚀2.imageName)
 
     }
 

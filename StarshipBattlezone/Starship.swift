@@ -53,16 +53,20 @@ class Starship {
             physics.affectedByGravity = false
             physics.allowsRotation = true
             if playerNumber == 1 {
-                physics.categoryBitMask = ColliderType.Starship1.rawValue
-                physics.collisionBitMask = ColliderType.Missile2.rawValue
-                physics.contactTestBitMask = ColliderType.Starship2.rawValue
+                physics.categoryBitMask =  ColliderType.Starship1.rawValue //Game.starship1Category
+                physics.collisionBitMask = ColliderType.Missile2.rawValue //Game.missile2Category 
+                physics.contactTestBitMask = Game.starship2Category //ColliderType.Starship2.rawValue
             }
             else {
-                physics.categoryBitMask = ColliderType.Starship2.rawValue
-                physics.collisionBitMask = ColliderType.Missile1.rawValue
-                physics.contactTestBitMask = ColliderType.Starship1.rawValue
+                physics.categoryBitMask = ColliderType.Starship2.rawValue //Game.starship2Category
+                physics.collisionBitMask = ColliderType.Missile1.rawValue //Game.missile1Category
+                //physics.contactTestBitMask = Game.starship1Category //ColliderType.Starship1.rawValue
             }
         }
+        println("\(ColliderType.Starship2.rawValue) - \(ColliderType.Starship2.rawValue)")
+        //println(sprite.physicsBody?.categoryBitMask)
+        //println(Game.starship1Category)
+        //println(Game.missile1Category)
         
         if self.playerNumber == 1 {
             self.sprite.position.x = self.viewSize.x/2
@@ -141,7 +145,7 @@ class Starship {
         //println(angle)
         angle = atan2f(Float(deltaY), Float(deltaX))
         angle -= Float(M_PI/2)
-        println(angle)
+        //println(angle)
         self.sprite.zRotation = CGFloat(angle)
         //let action = SKAction.rotateByAngle(CGFloat(angle), duration:0.1)
         //sprite.runAction(SKAction.repeatAction(action, count: 1))

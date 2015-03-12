@@ -39,14 +39,14 @@ class Missile {
             physics.linearDamping = 0.0
             physics.angularDamping = 0.0
             if playerNumber == 1 {
-                physics.categoryBitMask = ColliderType.Missile1.rawValue
-                physics.collisionBitMask = ColliderType.Missile1.rawValue
-                physics.contactTestBitMask = ColliderType.Missile1.rawValue
+                physics.categoryBitMask =  ColliderType.Missile1.rawValue //Game.missile1Category
+                //physics.collisionBitMask = Game.starship2Category | Game.missile2Category //ColliderType.Starship2.rawValue | ColliderType.Missile2.rawValue
+                //physics.contactTestBitMask = ColliderType.Missile1.rawValue
             }
             else {
-                physics.categoryBitMask = ColliderType.Missile2.rawValue
-                physics.collisionBitMask = ColliderType.Missile2.rawValue
-                physics.contactTestBitMask = ColliderType.Missile2.rawValue
+                physics.categoryBitMask = ColliderType.Missile2.rawValue //Game.missile2Category
+                //physics.collisionBitMask = Game.starship1Category | Game.missile1Category //ColliderType.Starship1.rawValue | ColliderType.Missile1.rawValue
+                //physics.contactTestBitMask = ColliderType.Missile2.rawValue
             }
         }
         self.sprite.position = CGPoint(x: 100 + num * 100 , y: 200)
@@ -97,7 +97,7 @@ class Missile {
         let deltaY = Game.🚀2.sprite.position.y - Game.🚀1.sprite.position.y
         angle = atan2f(Float(deltaY), Float(deltaX))
         angle -= Float(M_PI/2)
-        println(angle)
+        //println(angle)
         self.sprite.zRotation = CGFloat(angle)
         self.sprite.zRotation = CGFloat(angle)
         self.sprite.position = newPosition
