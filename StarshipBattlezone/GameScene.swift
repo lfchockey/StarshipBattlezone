@@ -12,7 +12,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let myLabel = SKLabelNode(fontNamed:"Chalkduster")
     
+    
     override func didMoveToView(view: SKView) {
+        self.view?.backgroundColor = UIColor(patternImage: UIImage(named: "SpaceBackground.png")!)
+        
         self.userInteractionEnabled = true
         myLabel.text = "Ready...Set...Battle!!!";
         myLabel.fontSize = 65;
@@ -49,6 +52,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
         self.physicsWorld.gravity = CGVector.zeroVector
         //println("self.physicsWorld.contactDelegate = \(self.physicsWorld.contactDelegate)")
+        initImages()
+    }
+    
+    func initImages() {
         
     }
     
@@ -61,11 +68,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let deltaY = location.y - Game.🚀1.sprite.position.y
             Game.🚀1.setSpeed(CGPoint(x: 25, y: 25))
             Game.🚀1.fire(CGPoint(x: deltaX, y: deltaY))
+          
         }
         myLabel.text = ""
         
-        //println("Starship1 - \(Game.🚀1.sprite.physicsBody?.contactTestBitMask) Starship2 - \(Game.🚀2.sprite.physicsBody?.contactTestBitMask)")
-        //println("Missile1 - \(Game.🚀1.missiles[0].sprite.physicsBody?.contactTestBitMask) Missile2 - \(Game.🚀2.missiles[0].sprite.physicsBody?.contactTestBitMask)")
     }
    
     override func update(currentTime: CFTimeInterval) {
@@ -88,11 +94,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Starship1 collides with Missiles from Starship2
         if ((contact.bodyA.categoryBitMask == ColliderType.Starship1.rawValue ) &&
-        (contact.bodyB.categoryBitMask == ColliderType.Missile2.rawValue)) || ((contact.bodyA.categoryBitMask == ColliderType.Missile2.rawValue ) &&
-        (contact.bodyB.categoryBitMask == ColliderType.Starship1.rawValue)){
+        (contact.bodyB.categoryBitMask == ColliderType.Missile2.rawValue)) {
             println("\(firstNode.name) hit \(secondNode.name)")
+            //secondNode.isBeingFired = false
             //var fullNameArr = split(secondNode.name) {$0 == " "}
-            Game.🚀2.missiles[5].isBeingFired = false
+            //Game.🚀2.missiles[5].isBeingFired = false
+            //firstNode.hidden = true  // This works at hiding the starship
+        }
+        else if ((contact.bodyA.categoryBitMask == ColliderType.Missile2.rawValue ) &&
+            (contact.bodyB.categoryBitMask == ColliderType.Starship1.rawValue)) {
+                
         }
         
         if ((contact.bodyA.categoryBitMask == ColliderType.Starship2.rawValue ) &&

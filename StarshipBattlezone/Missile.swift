@@ -20,11 +20,12 @@ class Missile {
     var isBeingFired = false
     var angle: Float = 0.0
     var playerNumber = 0
+    var missileAnimation = [SKTexture]()
     
     init (playerNum: Int) {
-        sprite = SKSpriteNode(imageNamed:"Missile")
-        self.sprite.xScale = 0.05
-        self.sprite.yScale = 0.05
+        sprite = SKSpriteNode(imageNamed:"Missile1")
+        self.sprite.xScale = 0.5
+        self.sprite.yScale = 0.5
        
         self.playerNumber = playerNum
         
@@ -32,7 +33,8 @@ class Missile {
     
     func setSprite(num: Int) {
      
-        sprite.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "Missile"), size: sprite.size)
+        //sprite.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "Missile1"), size: sprite.size)
+        sprite.physicsBody = SKPhysicsBody(rectangleOfSize: sprite.frame.size)
         if let physics = sprite.physicsBody {
             physics.affectedByGravity = false
             physics.allowsRotation = false
@@ -43,18 +45,31 @@ class Missile {
                 physics.categoryBitMask =  ColliderType.Missile1.rawValue //Game.missile1Category
                 physics.collisionBitMask = ColliderType.Starship2.rawValue //Game.starship2Category //| Game.missile2Category //ColliderType.Starship2.rawValue | ColliderType.Missile2.rawValue
                 physics.contactTestBitMask = ColliderType.Starship2.rawValue //ColliderType.Missile1.rawValue
-                
-                sprite.name = String(num) //"Missile1 - \(num)"
+                sprite.zRotation = CGFloat(M_PI)
+                sprite.name = String("Missile1-\(num)")
             }
             else {
                 physics.categoryBitMask = ColliderType.Missile2.rawValue //Game.missile2Category
                 physics.collisionBitMask = ColliderType.Starship1.rawValue  //Game.starship1Category | Game.missile1Category //ColliderType.Starship1.rawValue | ColliderType.Missile1.rawValue
                 physics.contactTestBitMask = ColliderType.Starship1.rawValue  //ColliderType.Missile2.rawValue
-                
-                sprite.name = String(num) //"Missile2 - \(num)"
+                sprite.zRotation = CGFloat(M_PI)
+                sprite.name = String("Missile2-\(num)")
             }
         }
         self.sprite.position = CGPoint(x: 100 + num * 100 , y: 200)
+        
+        
+        let missileAtlas = SKTextureAtlas(named: "Missiles")
+        
+        for index in 1...missileAtlas.textureNames.count {
+            let texture = "Missile\(index)"
+            missileAnimation += [missileAtlas.textureNamed(texture)]
+        }
+        
+        for i in 0..<10 {
+            let animate = SKAction.animateWithTextures(missileAnimation, timePerFrame: 0.05)
+            sprite.runAction(SKAction.repeatActionForever(animate))
+        }
     }
 
     func setSpeed (newSpeed: CGPoint, newPosition: CGPoint) {
@@ -103,7 +118,7 @@ class Missile {
         angle = atan2f(Float(deltaY), Float(deltaX))
         angle -= Float(M_PI/2)
         //println(angle)
-        self.sprite.zRotation = CGFloat(angle)
+        //self.sprite.zRotation = CGFloat(angle)
         self.sprite.zRotation = CGFloat(angle)
         self.sprite.position = newPosition
         self.sprite.physicsBody?.velocity = CGVector(dx: self.speed.x, dy: self.speed.y)
