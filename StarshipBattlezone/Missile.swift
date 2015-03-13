@@ -38,15 +38,20 @@ class Missile {
             physics.allowsRotation = false
             physics.linearDamping = 0.0
             physics.angularDamping = 0.0
+            physics.usesPreciseCollisionDetection = true
             if playerNumber == 1 {
                 physics.categoryBitMask =  ColliderType.Missile1.rawValue //Game.missile1Category
-                //physics.collisionBitMask = Game.starship2Category | Game.missile2Category //ColliderType.Starship2.rawValue | ColliderType.Missile2.rawValue
-                //physics.contactTestBitMask = ColliderType.Missile1.rawValue
+                physics.collisionBitMask = ColliderType.Starship2.rawValue //Game.starship2Category //| Game.missile2Category //ColliderType.Starship2.rawValue | ColliderType.Missile2.rawValue
+                physics.contactTestBitMask = ColliderType.Starship2.rawValue //ColliderType.Missile1.rawValue
+                
+                sprite.name = String(num) //"Missile1 - \(num)"
             }
             else {
                 physics.categoryBitMask = ColliderType.Missile2.rawValue //Game.missile2Category
-                //physics.collisionBitMask = Game.starship1Category | Game.missile1Category //ColliderType.Starship1.rawValue | ColliderType.Missile1.rawValue
-                //physics.contactTestBitMask = ColliderType.Missile2.rawValue
+                physics.collisionBitMask = ColliderType.Starship1.rawValue  //Game.starship1Category | Game.missile1Category //ColliderType.Starship1.rawValue | ColliderType.Missile1.rawValue
+                physics.contactTestBitMask = ColliderType.Starship1.rawValue  //ColliderType.Missile2.rawValue
+                
+                sprite.name = String(num) //"Missile2 - \(num)"
             }
         }
         self.sprite.position = CGPoint(x: 100 + num * 100 , y: 200)

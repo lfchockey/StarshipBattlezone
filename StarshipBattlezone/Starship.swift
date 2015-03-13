@@ -40,8 +40,6 @@ class Starship {
             let missile = Missile(playerNum: playerNum)
             missiles.append(missile)
         }
-
-        
     }
     
     func setSprite(filename: String) {
@@ -52,18 +50,19 @@ class Starship {
         if let physics = sprite.physicsBody {
             physics.affectedByGravity = false
             physics.allowsRotation = true
+            physics.usesPreciseCollisionDetection = true
             if playerNumber == 1 {
                 physics.categoryBitMask =  ColliderType.Starship1.rawValue //Game.starship1Category
-                physics.collisionBitMask = ColliderType.Missile2.rawValue //Game.missile2Category 
-                physics.contactTestBitMask = Game.starship2Category //ColliderType.Starship2.rawValue
+                physics.collisionBitMask = ColliderType.Missile2.rawValue | ColliderType.Starship2.rawValue //Game.missile2Category
+                physics.contactTestBitMask = ColliderType.Missile2.rawValue //Game.starship2Category //ColliderType.Starship2.rawValue
             }
             else {
                 physics.categoryBitMask = ColliderType.Starship2.rawValue //Game.starship2Category
-                physics.collisionBitMask = ColliderType.Missile1.rawValue //Game.missile1Category
-                //physics.contactTestBitMask = Game.starship1Category //ColliderType.Starship1.rawValue
+                physics.collisionBitMask = ColliderType.Missile1.rawValue | ColliderType.Starship1.rawValue //Game.missile1Category
+                physics.contactTestBitMask = ColliderType.Missile1.rawValue //Game.starship1Category //ColliderType.Starship1.rawValue
             }
         }
-        println("\(ColliderType.Starship2.rawValue) - \(ColliderType.Starship2.rawValue)")
+        //println("\(ColliderType.Starship1.rawValue) - \(ColliderType.Starship2.rawValue)")
         //println(sprite.physicsBody?.categoryBitMask)
         //println(Game.starship1Category)
         //println(Game.missile1Category)
@@ -164,7 +163,6 @@ class Starship {
                 var gunPosition =  sprite.childNodeWithName("gun")!.convertPoint(CGPointZero, toNode: sprite.parent!)
                 missiles[i].setSpeed(missileSpeed, newPosition: gunPosition)
                 missiles[i].isBeingFired = true
-                //missiles[i].sprite.position = sprite.childNodeWithName("gun")!.convertPoint(CGPointZero, toNode: sprite.parent!)
                 break
             }
         }

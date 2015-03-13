@@ -64,8 +64,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         myLabel.text = ""
         
-        println("Starship1 - \(Game.🚀1.sprite.physicsBody?.categoryBitMask) Starship2 - \(Game.🚀2.sprite.physicsBody?.categoryBitMask)")
-        println("Missile1 - \(Game.🚀1.missiles[0].sprite.physicsBody?.categoryBitMask) Missile2 - \(Game.🚀2.missiles[0].sprite.physicsBody?.categoryBitMask)")
+        //println("Starship1 - \(Game.🚀1.sprite.physicsBody?.contactTestBitMask) Starship2 - \(Game.🚀2.sprite.physicsBody?.contactTestBitMask)")
+        //println("Missile1 - \(Game.🚀1.missiles[0].sprite.physicsBody?.contactTestBitMask) Missile2 - \(Game.🚀2.missiles[0].sprite.physicsBody?.contactTestBitMask)")
     }
    
     override func update(currentTime: CFTimeInterval) {
@@ -83,32 +83,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let firstNode = contact.bodyA.node as SKSpriteNode
         let secondNode = contact.bodyB.node as SKSpriteNode
         
-        println("\(firstNode.name) - \(secondNode.name)")
+        //println("\(firstNode.name) - \(secondNode.name)")
         
         
         // Starship1 collides with Missiles from Starship2
         if ((contact.bodyA.categoryBitMask == ColliderType.Starship1.rawValue ) &&
         (contact.bodyB.categoryBitMask == ColliderType.Missile2.rawValue)) || ((contact.bodyA.categoryBitMask == ColliderType.Missile2.rawValue ) &&
         (contact.bodyB.categoryBitMask == ColliderType.Starship1.rawValue)){
-            /*
-                let contactPoint = contact.contactPoint
-                let contact_y = contactPoint.y
-                let target_y = secondNode.position.y
-                let margin = secondNode.frame.size.height/2 - 25
-                
-                if (contact_y > (target_y - margin)) &&
-                    (contact_y < (target_y + margin)) {
-                        println("Hit")
-                }
-            */
-            println("Missile 2 hit Starship1")
+            println("\(firstNode.name) hit \(secondNode.name)")
+            //var fullNameArr = split(secondNode.name) {$0 == " "}
+            Game.🚀2.missiles[5].isBeingFired = false
         }
         
         if ((contact.bodyA.categoryBitMask == ColliderType.Starship2.rawValue ) &&
             (contact.bodyB.categoryBitMask == ColliderType.Missile1.rawValue)) || ((contact.bodyA.categoryBitMask == ColliderType.Missile1.rawValue ) &&
                 (contact.bodyB.categoryBitMask == ColliderType.Starship2.rawValue)){
-            println("Missile 1 hit Starship2")        
+            println("\(firstNode.name) hit \(secondNode.name)")
         }
+        
+        /*
+        // Ship bullet hit an invader
+        [self runAction:[SKAction playSoundFileNamed:@"InvaderHit.wav" waitForCompletion:NO]];
+        [contact.bodyA.node removeFromParent];
+        [contact.bodyB.node removeFromParent];
+*/
         
     }
 }
