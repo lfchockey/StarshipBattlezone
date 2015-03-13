@@ -12,9 +12,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let myLabel = SKLabelNode(fontNamed:"Chalkduster")
     
-    
     override func didMoveToView(view: SKView) {
         self.view?.backgroundColor = UIColor(patternImage: UIImage(named: "SpaceBackground.png")!)
+        var bgImage = SKSpriteNode(imageNamed: "SpaceBackground")
+        
+        self.addChild(bgImage)
+        bgImage.position = CGPointMake(self.size.width/2, self.size.height/2)
         
         self.userInteractionEnabled = true
         myLabel.text = "Ready...Set...Battle!!!";
@@ -103,7 +106,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         else if ((contact.bodyA.categoryBitMask == ColliderType.Missile2.rawValue ) &&
             (contact.bodyB.categoryBitMask == ColliderType.Starship1.rawValue)) {
-                
+            
         }
         
         if ((contact.bodyA.categoryBitMask == ColliderType.Starship2.rawValue ) &&
