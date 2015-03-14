@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F9569481AB318760097BF1B /* Missiles.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 3F9569471AB318750097BF1B /* Missiles.atlas */; };
 		3F95694A1AB337120097BF1B /* SpaceBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F9569491AB337120097BF1B /* SpaceBackground.png */; };
+		F158F9981AB375D400AD9688 /* Missiles.atlas in Resources */ = {isa = PBXBuildFile; fileRef = F158F9971AB375D400AD9688 /* Missiles.atlas */; };
+		F158F99A1AB47B9500AD9688 /* explosions.atlas in Resources */ = {isa = PBXBuildFile; fileRef = F158F9991AB47B9500AD9688 /* explosions.atlas */; };
+		F158F99C1AB4851E00AD9688 /* explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F158F99B1AB4851E00AD9688 /* explosion.mp3 */; };
+		F158F99E1AB4852300AD9688 /* missile.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F158F99D1AB4852300AD9688 /* missile.mp3 */; };
 		F1BFC43B1AAFA9B200CFDC83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BFC43A1AAFA9B200CFDC83 /* AppDelegate.swift */; };
 		F1BFC43D1AAFA9B200CFDC83 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = F1BFC43C1AAFA9B200CFDC83 /* GameScene.sks */; };
 		F1BFC43F1AAFA9B200CFDC83 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BFC43E1AAFA9B200CFDC83 /* GameScene.swift */; };
@@ -33,8 +36,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3F9569471AB318750097BF1B /* Missiles.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = Missiles.atlas; path = ../../Tank_Assets/Missiles.atlas; sourceTree = "<group>"; };
 		3F9569491AB337120097BF1B /* SpaceBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SpaceBackground.png; sourceTree = "<group>"; };
+		F158F9971AB375D400AD9688 /* Missiles.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Missiles.atlas; sourceTree = "<group>"; };
+		F158F9991AB47B9500AD9688 /* explosions.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = explosions.atlas; sourceTree = "<group>"; };
+		F158F99B1AB4851E00AD9688 /* explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explosion.mp3; sourceTree = "<group>"; };
+		F158F99D1AB4852300AD9688 /* missile.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = missile.mp3; sourceTree = "<group>"; };
 		F1BFC4351AAFA9B200CFDC83 /* StarshipBattlezone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarshipBattlezone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1BFC4391AAFA9B200CFDC83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1BFC43A1AAFA9B200CFDC83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -91,8 +97,9 @@
 		F1BFC4371AAFA9B200CFDC83 /* StarshipBattlezone */ = {
 			isa = PBXGroup;
 			children = (
+				F158F9991AB47B9500AD9688 /* explosions.atlas */,
+				F158F9971AB375D400AD9688 /* Missiles.atlas */,
 				3F9569491AB337120097BF1B /* SpaceBackground.png */,
-				3F9569471AB318750097BF1B /* Missiles.atlas */,
 				F1BFC43A1AAFA9B200CFDC83 /* AppDelegate.swift */,
 				F1BFC43C1AAFA9B200CFDC83 /* GameScene.sks */,
 				F1BFC43E1AAFA9B200CFDC83 /* GameScene.swift */,
@@ -111,6 +118,8 @@
 		F1BFC4381AAFA9B200CFDC83 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F158F99D1AB4852300AD9688 /* missile.mp3 */,
+				F158F99B1AB4851E00AD9688 /* explosion.mp3 */,
 				F1BFC4391AAFA9B200CFDC83 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -214,10 +223,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1BFC4491AAFA9B200CFDC83 /* LaunchScreen.xib in Resources */,
-				3F9569481AB318760097BF1B /* Missiles.atlas in Resources */,
 				3F95694A1AB337120097BF1B /* SpaceBackground.png in Resources */,
+				F158F9981AB375D400AD9688 /* Missiles.atlas in Resources */,
+				F158F99E1AB4852300AD9688 /* missile.mp3 in Resources */,
 				F1BFC4461AAFA9B200CFDC83 /* Images.xcassets in Resources */,
+				F158F99C1AB4851E00AD9688 /* explosion.mp3 in Resources */,
 				F1BFC43D1AAFA9B200CFDC83 /* GameScene.sks in Resources */,
+				F158F99A1AB47B9500AD9688 /* explosions.atlas in Resources */,
 				F1BFC4441AAFA9B200CFDC83 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

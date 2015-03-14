@@ -11,13 +11,44 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let myLabel = SKLabelNode(fontNamed:"Chalkduster")
+    var explosionAnimation = [SKTexture]()
     
     override func didMoveToView(view: SKView) {
-        self.view?.backgroundColor = UIColor(patternImage: UIImage(named: "SpaceBackground.png")!)
-        var bgImage = SKSpriteNode(imageNamed: "SpaceBackground")
         
-        self.addChild(bgImage)
-        bgImage.position = CGPointMake(self.size.width/2, self.size.height/2)
+        // Create the connection with the music file
+        //if let bgMusicURL = NSBundle.mainBundle().URLForResource("Background", withExtension: "mp3") {
+        //    // Create the audio-player
+        //   if let bgMusicPlayer = AVAudioPlayer(contentsOfURL: bgMusicURL, error: nil) {
+        //     // Prepare the player and set it so that it loops
+        //   bgMusicPlayer.numberOfLoops = -1
+        //bgMusicPlayer.prepareToPlay()
+        //bgMusicPlayer.play()
+        //  }
+        //}
+        
+        self.view?.backgroundColor = UIColor(patternImage: UIImage(named: "SpaceBackground.png")!)
+        //var bgImage = SKSpriteNode(imageNamed: "SpaceBackground")
+        var bgLayer = SKNode();
+        self.addChild(bgLayer)
+        
+        var bgTexture = SKTexture(imageNamed: "SpaceBackground")
+        var doubleBg = CGFloat(-bgTexture.size().width*2)
+        var bgDuration = NSTimeInterval(0.1 * bgTexture.size().width)
+        var bgMove = SKAction.moveByX(doubleBg, y: 0, duration: bgDuration)
+        var bgReset = SKAction.moveByX(-doubleBg, y: 0, duration: 0)
+        var moveBgForever = SKAction.repeatActionForever(SKAction.sequence([bgMove, bgReset]))
+        
+        for (var i=0; i < Int(2 + self.frame.size.width / (bgTexture.size().width * 2)); ++i) {
+            var sp = SKSpriteNode(texture: bgTexture)
+            sp.setScale(1.0)
+            sp.zPosition = -20
+            sp.anchorPoint = CGPointZero
+            sp.position = CGPointMake(CGFloat(i) * CGFloat(sp.size.width), 0)
+            sp.runAction(moveBgForever)
+            bgLayer.addChild(sp)
+        }
+        //self.addChild(bgImage)
+        //bgImage.position = CGPointMake(self.size.width/2, self.size.height/2)
         
         self.userInteractionEnabled = true
         myLabel.text = "Ready...Set...Battle!!!";
@@ -47,9 +78,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             Game.🚀1.missiles[i].setSprite(i)
             Game.🚀2.missiles[i].setSprite(i)
             
-            self.addChild(Game.🚀1.missiles[i].sprite) // This is the line that causes the touch to be disabled
+            self.addChild(Game.🚀1.missiles[i].sprite)
             self.addChild(Game.🚀2.missiles[i].sprite)
 
+        }
+        
+        // Set up the explosion animation to use later when missiles collide with a starship
+        let explosionAtlas = SKTextureAtlas(named: "explosions")
+        for index in 0..<explosionAtlas.textureNames.count {
+            let texture = "explosion\(index)"
+            explosionAnimation += [explosionAtlas.textureNamed(texture)]
         }
         
         self.physicsWorld.contactDelegate = self
@@ -70,8 +108,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let deltaX = location.x - Game.🚀1.sprite.position.x
             let deltaY = location.y - Game.🚀1.sprite.position.y
             Game.🚀1.setSpeed(CGPoint(x: 25, y: 25))
-            Game.🚀1.fire(CGPoint(x: deltaX, y: deltaY))
-          
+            Game.🚀1.fire(CGPoint(x: deltaX, y: deltaY)) //var missileSprite = Game.🚀1.fire(CGPoint(x: deltaX, y: deltaY))
+            playFireMissileSound()
+            //self.addChild(missileSprite)
         }
         myLabel.text = ""
         
@@ -81,7 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /* Called before each frame is rendered */
         //println(Game.🚀2.sprite.physicsBody?.categoryBitMask)
         //myLabel.text = ""
-        
+
         Game.🚀1.move()
         for i in 0 ..< Game.🚀1.TOTAL_MISSILES {
             Game.🚀1.missiles[i].move()
@@ -96,23 +135,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         // Starship1 collides with Missiles from Starship2
-        if ((contact.bodyA.categoryBitMask == ColliderType.Starship1.rawValue ) &&
-        (contact.bodyB.categoryBitMask == ColliderType.Missile2.rawValue)) {
-            println("\(firstNode.name) hit \(secondNode.name)")
-            //secondNode.isBeingFired = false
-            //var fullNameArr = split(secondNode.name) {$0 == " "}
-            //Game.🚀2.missiles[5].isBeingFired = false
-            //firstNode.hidden = true  // This works at hiding the starship
+        if ((contact.bodyA.categoryBitMask == ColliderType.Starship1.rawValue ) && (contact.bodyB.categoryBitMask == ColliderType.Missile2.rawValue)) {
+        
+            //println("\(firstNode.name) hit \(secondNode.name)")
+            hitDetected(firstNode.name!, missileName: secondNode.name!)
+
         }
-        else if ((contact.bodyA.categoryBitMask == ColliderType.Missile2.rawValue ) &&
-            (contact.bodyB.categoryBitMask == ColliderType.Starship1.rawValue)) {
+        else if ((contact.bodyA.categoryBitMask == ColliderType.Missile2.rawValue ) && (contact.bodyB.categoryBitMask == ColliderType.Starship1.rawValue)) {
+            
+            hitDetected(secondNode.name!, missileName: firstNode.name!)
             
         }
         
-        if ((contact.bodyA.categoryBitMask == ColliderType.Starship2.rawValue ) &&
-            (contact.bodyB.categoryBitMask == ColliderType.Missile1.rawValue)) || ((contact.bodyA.categoryBitMask == ColliderType.Missile1.rawValue ) &&
-                (contact.bodyB.categoryBitMask == ColliderType.Starship2.rawValue)){
-            println("\(firstNode.name) hit \(secondNode.name)")
+        if ((contact.bodyA.categoryBitMask == ColliderType.Starship2.rawValue ) && (contact.bodyB.categoryBitMask == ColliderType.Missile1.rawValue)) {
+            
+            //println("\(firstNode.name) hit \(secondNode.name)")
+            hitDetected(firstNode.name!, missileName: secondNode.name!)
+            //println(Game.🚀1.missiles)
+            //contact.bodyB.node?.removeFromParent()
+            
+        }
+        else if ((contact.bodyA.categoryBitMask == ColliderType.Missile1.rawValue ) && (contact.bodyB.categoryBitMask == ColliderType.Starship2.rawValue)) {
+            
+            hitDetected(secondNode.name!, missileName: firstNode.name!)
+            
         }
         
         /*
@@ -122,5 +168,88 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         [contact.bodyB.node removeFromParent];
 */
         
+    }
+    
+    func hitDetected(starshipName: String, missileName: String){
+        if starshipName == Game.🚀1.sprite.name {
+            // Starship2 scores
+            Game.🚀1.life -= 1
+            
+            // Check to see if Game is over
+            gameOverCheck()
+            
+            // Remove proper missile from the screen
+            for i in 0..<10 {
+                if missileName == Game.🚀2.missiles[i].sprite.name {
+                    // Set the velocity to zero
+                    Game.🚀2.missiles[i].sprite.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                    // Move missile
+                    Game.🚀2.missiles[i].sprite.position = CGPoint(x: -50, y: -50)
+                    
+                    // Make exlposion
+                    
+                    // Play sound
+                    println(Game.🚀2.missiles[i].sprite.name)
+                }
+            }
+        }
+        else if starshipName == Game.🚀2.sprite.name {
+            // Starship2 scores
+            Game.🚀2.life -= 1
+            
+            // Check to see if Game is over
+            gameOverCheck()
+            
+            // Remove proper missile from the screen
+            for i in 0..<10 {
+                if missileName == Game.🚀1.missiles[i].sprite.name {
+                    // Set the velocity to zero
+                    Game.🚀1.missiles[i].sprite.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                    let contactPoint = Game.🚀1.missiles[i].sprite.position
+                    // Move missile
+                    //Game.🚀1.missiles[i].sprite.position = CGPoint(x: -50, y: -50)
+                    var moveMissile = SKAction.moveTo(CGPoint(x: -50, y: -50), duration: 0.01)
+                    var moveAction = SKAction.repeatAction(moveMissile, count: 1)
+                    Game.🚀1.missiles[i].sprite.runAction(moveAction)
+                    
+                    playExplosionSound()
+                    // Make exlposion
+                    explodeMissile(contactPoint)
+                    // Play sound
+
+                }
+            }
+        }
+
+    }
+    
+    func explodeMissile(whereToExplode: CGPoint) {
+        let explosionSprite = SKSpriteNode(imageNamed:"explosion0")
+        self.addChild(explosionSprite)
+        explosionSprite.position = whereToExplode
+        let animate = SKAction.animateWithTextures(explosionAnimation, timePerFrame: 0.05)
+        let explosionSequence = SKAction.sequence([animate, SKAction.removeFromParent()])
+        explosionSprite.runAction(SKAction.repeatAction(explosionSequence, count: 1))
+    }
+    
+    func playExplosionSound() {
+        self.runAction(SKAction.playSoundFileNamed("explosion.mp3", waitForCompletion: true))
+    }
+    
+    func playFireMissileSound() {
+        self.runAction(SKAction.playSoundFileNamed("missile.mp3", waitForCompletion: true))
+    }
+    
+    func gameOverCheck(){
+        
+        if Game.🚀1.life <= 0 {
+            // Starship2 wins
+            
+            // Stop the update function
+        }
+        else if Game.🚀2.life <= 0 {
+            // Starship1 wins
+            
+        }
     }
 }

@@ -49,7 +49,7 @@ class Starship {
         sprite.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: imageName), size: sprite.size) // hard-coding this line with a cgsize makes the missiles fly?
         if let physics = sprite.physicsBody {
             physics.affectedByGravity = false
-            physics.allowsRotation = true
+            physics.allowsRotation = false
             physics.usesPreciseCollisionDetection = true
             if playerNumber == 1 {
                 physics.categoryBitMask =  ColliderType.Starship1.rawValue //Game.starship1Category
@@ -143,7 +143,7 @@ class Starship {
         //angle = atan2f(Float(deltaY), Float(deltaX))
         //println(angle)
         angle = atan2f(Float(deltaY), Float(deltaX))
-        angle -= Float(M_PI/2)
+        angle = angle - Float(M_PI/2)
         //println(angle)
         self.sprite.zRotation = CGFloat(angle)
         //let action = SKAction.rotateByAngle(CGFloat(angle), duration:0.1)

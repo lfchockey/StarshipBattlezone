@@ -11,6 +11,7 @@ import UIKit
 import SpriteKit
 import Darwin
 
+
 class Missile {
     var speed = CGPoint(x: 0, y: 0)
     var sprite = SKSpriteNode()
@@ -56,9 +57,8 @@ class Missile {
                 sprite.name = String("Missile2-\(num)")
             }
         }
-        self.sprite.position = CGPoint(x: 100 + num * 100 , y: 200)
-        
-        
+        //self.sprite.position = CGPoint(x: 100 + num * 100 , y: 200)
+        self.sprite.position = CGPoint(x: -50, y: -50)
         let missileAtlas = SKTextureAtlas(named: "Missiles")
         
         for index in 1...missileAtlas.textureNames.count {
@@ -113,17 +113,18 @@ class Missile {
             self.sprite.zRotation = CGFloat(M_PI/4)
         }
         */
-        let deltaX = Game.🚀2.sprite.position.x - Game.🚀1.sprite.position.x
-        let deltaY = Game.🚀2.sprite.position.y - Game.🚀1.sprite.position.y
-        angle = atan2f(Float(deltaY), Float(deltaX))
-        angle -= Float(M_PI/2)
+        //let deltaX = Game.🚀2.sprite.position.x - Game.🚀1.sprite.position.x
+        //let deltaY = Game.🚀2.sprite.position.y - Game.🚀1.sprite.position.y
+        //angle = atan2f(Float(deltaY), Float(deltaX))
+        angle = atan2f(Float(tempSpeedY), Float(tempSpeedX))
+//        angle = angle - Float(M_PI/2)
         //println(angle)
         //self.sprite.zRotation = CGFloat(angle)
         self.sprite.zRotation = CGFloat(angle)
         self.sprite.position = newPosition
         self.sprite.physicsBody?.velocity = CGVector(dx: self.speed.x, dy: self.speed.y)
-
     }
+    
     
     func move() {
         if (self.isBeingFired) {
