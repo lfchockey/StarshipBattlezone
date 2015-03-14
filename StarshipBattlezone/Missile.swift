@@ -92,30 +92,9 @@ class Missile {
             tempSpeedY = -100
         }
         
-        //var angle: CGFloat = atan(newSpeed.y/newSpeed.x)
-        //println(angle)
         self.speed = CGPoint(x: tempSpeedX, y: tempSpeedY)
         
-        /*
-        if (speed.x >= 0 && speed.y > 0) {
-            self.sprite.zRotation = CGFloat(-M_PI/4)
-        }
-        else if (speed.x <= 0 && speed.y > 0) {
-            self.sprite.zRotation = CGFloat(M_PI/4)
-        }
-        else if (speed.x >= 0 && speed.y < 0) {
-            self.sprite.zRotation = CGFloat(-3*M_PI/4)
-        }
-        else if (speed.x <= 0 && speed.y < 0) {
-            self.sprite.zRotation = CGFloat(3*M_PI/4)
-        }
-        else {
-            self.sprite.zRotation = CGFloat(M_PI/4)
-        }
-        */
-        //let deltaX = Game.🚀2.sprite.position.x - Game.🚀1.sprite.position.x
-        //let deltaY = Game.🚀2.sprite.position.y - Game.🚀1.sprite.position.y
-        //angle = atan2f(Float(deltaY), Float(deltaX))
+
         angle = atan2f(Float(tempSpeedY), Float(tempSpeedX))
 //        angle = angle - Float(M_PI/2)
         //println(angle)
@@ -132,7 +111,11 @@ class Missile {
             //println("XSprite \(sprite.position.x) - XView \(viewSize.x) - YSprite \(sprite.position.y) - YView \(viewSize.y)")
             if (self.sprite.position.x < 0 || self.sprite.position.x > self.viewSize.x || self.sprite.position.y < 0 || self.sprite.position.y > self.viewSize.y) {
                 self.isBeingFired = false
+                self.sprite.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
                 self.sprite.position = CGPoint(x: -50, y: -50)
+                var moveMissile = SKAction.moveTo(self.sprite.position, duration: 0.01)
+                var moveAction = SKAction.repeatAction(moveMissile, count: 1)
+                sprite.runAction(moveAction)
             }
         }
     }

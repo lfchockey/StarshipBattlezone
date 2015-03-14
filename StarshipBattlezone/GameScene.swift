@@ -8,23 +8,25 @@
 
 import SpriteKit
 
+protocol gameSceneDelegate {
+    func starship2Move()
+}
+
+protocol missileSound {
+
+}
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let myLabel = SKLabelNode(fontNamed:"Chalkduster")
     var explosionAnimation = [SKTexture]()
+    var delegate2:gameSceneDelegate?
     
     override func didMoveToView(view: SKView) {
         
-        // Create the connection with the music file
-        //if let bgMusicURL = NSBundle.mainBundle().URLForResource("Background", withExtension: "mp3") {
-        //    // Create the audio-player
-        //   if let bgMusicPlayer = AVAudioPlayer(contentsOfURL: bgMusicURL, error: nil) {
-        //     // Prepare the player and set it so that it loops
-        //   bgMusicPlayer.numberOfLoops = -1
-        //bgMusicPlayer.prepareToPlay()
-        //bgMusicPlayer.play()
-        //  }
-        //}
+        
+        
+        //self.starship2Move() = MrBlack.starship2Move() //MrBlack.player1StarshipMove()
         
         self.view?.backgroundColor = UIColor(patternImage: UIImage(named: "SpaceBackground.png")!)
         //var bgImage = SKSpriteNode(imageNamed: "SpaceBackground")
@@ -108,6 +110,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let deltaX = location.x - Game.🚀1.sprite.position.x
             let deltaY = location.y - Game.🚀1.sprite.position.y
             Game.🚀1.setSpeed(CGPoint(x: 25, y: 25))
+            MrBlack.starship2Move()
             Game.🚀1.fire(CGPoint(x: deltaX, y: deltaY)) //var missileSprite = Game.🚀1.fire(CGPoint(x: deltaX, y: deltaY))
             playFireMissileSound()
             //self.addChild(missileSprite)
@@ -120,8 +123,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /* Called before each frame is rendered */
         //println(Game.🚀2.sprite.physicsBody?.categoryBitMask)
         //myLabel.text = ""
-
+        delegate2?.starship2Move()
+        
         Game.🚀1.move()
+        Game.🚀2.move()
         for i in 0 ..< Game.🚀1.TOTAL_MISSILES {
             Game.🚀1.missiles[i].move()
         }
@@ -206,16 +211,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     // Set the velocity to zero
                     Game.🚀1.missiles[i].sprite.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
                     let contactPoint = Game.🚀1.missiles[i].sprite.position
+                    
                     // Move missile
-                    //Game.🚀1.missiles[i].sprite.position = CGPoint(x: -50, y: -50)
                     var moveMissile = SKAction.moveTo(CGPoint(x: -50, y: -50), duration: 0.01)
                     var moveAction = SKAction.repeatAction(moveMissile, count: 1)
                     Game.🚀1.missiles[i].sprite.runAction(moveAction)
+                    Game.🚀1.missiles[i].isBeingFired = false
                     
+                    // Play sound
                     playExplosionSound()
                     // Make exlposion
                     explodeMissile(contactPoint)
-                    // Play sound
+                    
 
                 }
             }

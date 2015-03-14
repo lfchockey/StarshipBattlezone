@@ -145,7 +145,14 @@ class Starship {
         angle = atan2f(Float(deltaY), Float(deltaX))
         angle = angle - Float(M_PI/2)
         //println(angle)
-        self.sprite.zRotation = CGFloat(angle)
+        if playerNumber == 1 {
+            self.sprite.zRotation = CGFloat(angle)
+        }
+        else {
+            angle = angle - Float(M_PI)
+            self.sprite.zRotation = CGFloat(angle)
+        }
+        
         //let action = SKAction.rotateByAngle(CGFloat(angle), duration:0.1)
         //sprite.runAction(SKAction.repeatAction(action, count: 1))
         //sprite.runAction(SKAction.repeatActionForever(action))
@@ -154,7 +161,32 @@ class Starship {
     func move (){
         self.sprite.physicsBody?.velocity = CGVector(dx: self.speed.x, dy: self.speed.y)
         
-
+        if sprite.position.x < 0 {
+            var rightSideOfScreen = viewSize.x - sprite.size.width
+            var moveStarship = SKAction.moveTo(CGPoint(x: rightSideOfScreen, y: sprite.position.y), duration: 0.01)
+            var moveAction = SKAction.repeatAction(moveStarship, count: 1)
+            sprite.runAction(moveAction)
+        }
+        else if sprite.position.x > viewSize.x {
+            var leftSideOfScreen: CGFloat = 0.0
+            var moveStarship = SKAction.moveTo(CGPoint(x: leftSideOfScreen, y: sprite.position.y), duration: 0.01)
+            var moveAction = SKAction.repeatAction(moveStarship, count: 1)
+            sprite.runAction(moveAction)
+        }
+        
+        if sprite.position.y < 0 {
+            var topOfScreen = viewSize.y - sprite.size.height
+            var moveStarship = SKAction.moveTo(CGPoint(x: sprite.position.x, y: topOfScreen), duration: 0.01)
+            var moveAction = SKAction.repeatAction(moveStarship, count: 1)
+            sprite.runAction(moveAction)
+        }
+        else if sprite.position.y > viewSize.y {
+            var bottomOfScreen: CGFloat = 0.0
+            var moveStarship = SKAction.moveTo(CGPoint(x: sprite.position.x, y: bottomOfScreen), duration: 0.01)
+            var moveAction = SKAction.repeatAction(moveStarship, count: 1)
+            sprite.runAction(moveAction)
+        }
+        
     }
     
     func fire (missileSpeed: CGPoint) -> Void {
