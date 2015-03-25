@@ -62,10 +62,6 @@ class Starship {
                 physics.contactTestBitMask = ColliderType.Missile1.rawValue //Game.starship1Category //ColliderType.Starship1.rawValue
             }
         }
-        //println("\(ColliderType.Starship1.rawValue) - \(ColliderType.Starship2.rawValue)")
-        //println(sprite.physicsBody?.categoryBitMask)
-        //println(Game.starship1Category)
-        //println(Game.missile1Category)
         
         if self.playerNumber == 1 {
             self.sprite.position.x = self.viewSize.x/2

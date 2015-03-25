@@ -20,6 +20,8 @@ protocol missileSound {
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let myLabel = SKLabelNode(fontNamed:"Chalkduster")
+    let starship1Score = SKLabelNode(fontNamed: "Chalkduster")
+    let starship2Score = SKLabelNode(fontNamed: "Chalkduster")
     var explosionAnimation = [SKTexture]()
     
     var player1Delegate:gameSceneDelegate?
@@ -52,10 +54,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         
         self.userInteractionEnabled = true
+        
         myLabel.text = "Ready...Set...Battle!!!";
         myLabel.fontSize = 65;
         myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
         self.addChild(myLabel)
+        
+        starship1Score.text = String(Game.🚀1.life)
+        starship1Score.fontSize = 24
+        starship1Score.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame) + 20);
+        self.addChild(starship1Score)
+        
+        starship2Score.text = String(Game.🚀2.life)
+        starship2Score.fontSize = 24
+        starship2Score.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
+        self.addChild(starship2Score)
+        
+
        
         var parentViewSize = CGPoint(x: self.frame.width, y: self.frame.height)
         Game.🚀1.viewSize = parentViewSize
@@ -120,18 +135,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        //println(Game.🚀2.sprite.physicsBody?.categoryBitMask)
+
         myLabel.text = ""
-        //delegate2?.starship2Move()
-        //starship1Student.starship1Move()
-        //MrBlack.starship2Move()
+
         player1Delegate?.starship1Move()
         player2Delegate?.starship2Move()
-        //Game.🚀1.move()
-        //Game.🚀2.move()
+
         for i in 0 ..< Game.🚀1.TOTAL_MISSILES {
             Game.🚀1.missiles[i].move()
         }
+        for i in 0 ..< Game.🚀2.TOTAL_MISSILES {
+            Game.🚀2.missiles[i].move()
+        }
+        
+        updateScores()
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
@@ -332,5 +349,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //player2Delegate = CJWright()
         }
 
+    }
+    
+    func updateScores() {
+        starship1Score.text = String(Game.🚀1.life)
+        starship2Score.text = String(Game.🚀2.life)
     }
 }

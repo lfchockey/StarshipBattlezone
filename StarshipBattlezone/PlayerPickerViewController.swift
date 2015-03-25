@@ -14,7 +14,7 @@ struct Game {
     static var 🚀1 = Starship(playerNum: 1) 
     static var 🚀2 = Starship(playerNum: 2)
     
-    static var students = ["Mr Black", "Griffin Atkinson", "James Bleau", "Griffon Charron", "Brayden Doyle", "Matt Falkner", "Jared Hayes", "Brayden Konink", "Daniel MacCormick", "Quinton MacDougall", "CJ Wright"]
+    static var students = ["Mr Black", "Griffin Atkinson", "James Bleau", "Griffin Charron", "Brayden Doyle", "Matt Falkner", "Jared Hayes", "Brayden Konink", "Daniel MacCormick", "Quinton MacDougall", "CJ Wright"]
     
     static let starship1Category : UInt32 = 0x00
     static let missile1Category : UInt32 = 0x01
