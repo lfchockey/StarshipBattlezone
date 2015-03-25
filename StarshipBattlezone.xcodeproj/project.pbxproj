@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3F95694A1AB337120097BF1B /* SpaceBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F9569491AB337120097BF1B /* SpaceBackground.png */; };
+		F10EF8321AB60E9200B76871 /* GriffinAtkinson.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10EF8311AB60E9200B76871 /* GriffinAtkinson.swift */; };
 		F158F9981AB375D400AD9688 /* Missiles.atlas in Resources */ = {isa = PBXBuildFile; fileRef = F158F9971AB375D400AD9688 /* Missiles.atlas */; };
 		F158F99A1AB47B9500AD9688 /* explosions.atlas in Resources */ = {isa = PBXBuildFile; fileRef = F158F9991AB47B9500AD9688 /* explosions.atlas */; };
 		F158F99C1AB4851E00AD9688 /* explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F158F99B1AB4851E00AD9688 /* explosion.mp3 */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		3F9569491AB337120097BF1B /* SpaceBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SpaceBackground.png; sourceTree = "<group>"; };
+		F10EF8311AB60E9200B76871 /* GriffinAtkinson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GriffinAtkinson.swift; sourceTree = "<group>"; };
 		F158F9971AB375D400AD9688 /* Missiles.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Missiles.atlas; sourceTree = "<group>"; };
 		F158F9991AB47B9500AD9688 /* explosions.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = explosions.atlas; sourceTree = "<group>"; };
 		F158F99B1AB4851E00AD9688 /* explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explosion.mp3; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				F1BFC4601AAFB05600CFDC83 /* Starship.swift */,
 				F1BFC4641AAFB0CE00CFDC83 /* Missile.swift */,
 				F158F9A11AB4C51C00AD9688 /* MrBlack.swift */,
+				F10EF8311AB60E9200B76871 /* GriffinAtkinson.swift */,
 			);
 			path = StarshipBattlezone;
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 				F158F9A21AB4C51C00AD9688 /* MrBlack.swift in Sources */,
 				F1BFC4611AAFB05600CFDC83 /* Starship.swift in Sources */,
 				F1BFC4411AAFA9B200CFDC83 /* GameViewController.swift in Sources */,
+				F10EF8321AB60E9200B76871 /* GriffinAtkinson.swift in Sources */,
 				F1BFC45F1AAFAB5300CFDC83 /* PlayerPickerViewController.swift in Sources */,
 				F1BFC4651AAFB0CE00CFDC83 /* Missile.swift in Sources */,
 				F1BFC43B1AAFA9B200CFDC83 /* AppDelegate.swift in Sources */,

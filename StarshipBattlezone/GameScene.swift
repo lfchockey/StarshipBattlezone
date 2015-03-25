@@ -9,6 +9,7 @@
 import SpriteKit
 
 protocol gameSceneDelegate {
+    func starship1Move()
     func starship2Move()
 }
 
@@ -20,16 +21,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let myLabel = SKLabelNode(fontNamed:"Chalkduster")
     var explosionAnimation = [SKTexture]()
-    var delegate2:gameSceneDelegate?
+    
+    var player1Delegate:gameSceneDelegate?
+    var player2Delegate:gameSceneDelegate?
     
     override func didMoveToView(view: SKView) {
         
-        
-        
-        //self.starship2Move() = MrBlack.starship2Move() //MrBlack.player1StarshipMove()
+        setPlayerClasses()
         
         self.view?.backgroundColor = UIColor(patternImage: UIImage(named: "SpaceBackground.png")!)
-        //var bgImage = SKSpriteNode(imageNamed: "SpaceBackground")
         var bgLayer = SKNode();
         self.addChild(bgLayer)
         
@@ -49,8 +49,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             sp.runAction(moveBgForever)
             bgLayer.addChild(sp)
         }
-        //self.addChild(bgImage)
-        //bgImage.position = CGPointMake(self.size.width/2, self.size.height/2)
+
         
         self.userInteractionEnabled = true
         myLabel.text = "Ready...Set...Battle!!!";
@@ -110,7 +109,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let deltaX = location.x - Game.🚀1.sprite.position.x
             let deltaY = location.y - Game.🚀1.sprite.position.y
             Game.🚀1.setSpeed(CGPoint(x: 25, y: 25))
-            MrBlack.starship2Move()
+            //MrBlack.starship2Move()
             Game.🚀1.fire(CGPoint(x: deltaX, y: deltaY)) //var missileSprite = Game.🚀1.fire(CGPoint(x: deltaX, y: deltaY))
             playFireMissileSound()
             //self.addChild(missileSprite)
@@ -122,11 +121,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         //println(Game.🚀2.sprite.physicsBody?.categoryBitMask)
-        //myLabel.text = ""
-        delegate2?.starship2Move()
-        
-        Game.🚀1.move()
-        Game.🚀2.move()
+        myLabel.text = ""
+        //delegate2?.starship2Move()
+        //starship1Student.starship1Move()
+        //MrBlack.starship2Move()
+        player1Delegate?.starship1Move()
+        player2Delegate?.starship2Move()
+        //Game.🚀1.move()
+        //Game.🚀2.move()
         for i in 0 ..< Game.🚀1.TOTAL_MISSILES {
             Game.🚀1.missiles[i].move()
         }
@@ -194,7 +196,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     // Make exlposion
                     
                     // Play sound
-                    println(Game.🚀2.missiles[i].sprite.name)
+                    //println(Game.🚀2.missiles[i].sprite.name)
                 }
             }
         }
@@ -258,5 +260,77 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // Starship1 wins
             
         }
+    }
+    
+    func setPlayerClasses() {
+        println(Game.🚀1.name)
+        if Game.🚀1.name == "Starship-Mr Black" {
+            player1Delegate = MrBlack()
+        }
+        else if Game.🚀1.name == "Starship-Griffin Atkinson" {
+            player1Delegate = GriffinAtkinson()
+        }
+        else if Game.🚀1.name == "Starship-James Bleau" {
+            //player1Delegate = JamesBleau()
+        }
+        else if Game.🚀1.name == "Starship-Griffon Charron" {
+            //player1Delegate = GriffonCharron()
+        }
+        else if Game.🚀1.name == "Starship-Brayden Doyle" {
+            //player1Delegate = BraydenDoyle()
+        }
+        else if Game.🚀1.name == "Starship-Matt Falkner" {
+            //player1Delegate = MattFalkner()
+        }
+        else if Game.🚀1.name == "Starship-Jared Hayes" {
+            //player1Delegate = JaredHayes()
+        }
+        else if Game.🚀1.name == "Starship-Brayden Konink" {
+            //player1Delegate = BraydenKonink()
+        }
+        else if Game.🚀1.name == "Starship-Daniel MacCormick" {
+            //player1Delegate = DanielMacCormick()
+        }
+        else if Game.🚀1.name == "Starship-Quinton MacDougall" {
+            //player1Delegate = QuintonMacDougall()
+        }
+        else if Game.🚀1.name == "Starship-CJ Wright" {
+            //player1Delegate = CJWright()
+        }
+        
+        if Game.🚀2.name == "Starship-Mr Black" {
+            player2Delegate = MrBlack()
+        }
+        else if Game.🚀2.name == "Starship-Griffin Atkinson" {
+            player2Delegate = GriffinAtkinson()
+        }
+        else if Game.🚀2.name == "Starship-James Bleau" {
+            //player2Delegate = JamesBleau()
+        }
+        else if Game.🚀2.name == "Starship-Griffon Charron" {
+            //player2Delegate = GriffonCharron()
+        }
+        else if Game.🚀2.name == "Starship-Brayden Doyle" {
+            //player2Delegate = BraydenDoyle()
+        }
+        else if Game.🚀2.name == "Starship-Matt Falkner" {
+            //player2Delegate = MattFalkner()
+        }
+        else if Game.🚀2.name == "Starship-Jared Hayes" {
+            //player2Delegate = JaredHayes()
+        }
+        else if Game.🚀2.name == "Starship-Brayden Konink" {
+            //player2Delegate = BraydenKonink()
+        }
+        else if Game.🚀2.name == "Starship-Daniel MacCormick" {
+            //player2Delegate = DanielMacCormick()
+        }
+        else if Game.🚀2.name == "Starship-Quinton MacDougall" {
+            //player2Delegate = QuintonMacDougall()
+        }
+        else if Game.🚀2.name == "Starship-CJ Wright" {
+            //player2Delegate = CJWright()
+        }
+
     }
 }

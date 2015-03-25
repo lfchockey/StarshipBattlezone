@@ -12,13 +12,40 @@ import SpriteKit
 import Darwin
 
 
-
-class MrBlack {
+class MrBlack: NSObject, gameSceneDelegate {
+    override var description : String {return "I am a Mr. Black"}
+    var counter = 0
     
-    var GS:GameScene = GameScene()
+//    required override init() {
+//        super.init()
+//    }
     
-    class func starship2Move() {
+    func starship1Move() {
+        counter++
+        
+        if counter < 100 {
+            Game.🚀1.setSpeed(CGPoint(x: 25, y: 25))
+        }
+        else if counter < 200 {
+            Game.🚀1.setSpeed(CGPoint(x: -25, y: 25))
+        }
+        else if counter < 300 {
+            Game.🚀1.setSpeed(CGPoint(x: -25, y: -25))
+        }
+        else if counter < 400 {
+            Game.🚀1.setSpeed(CGPoint(x: 25, y: -25))
+        }
+        
+        Game.🚀1.move()
+        
+        if counter % 10 == 0 {
+            Game.🚀1.fire(CGPoint(x: ((Game.🚀2.sprite.position.x - Game.🚀1.sprite.position.x)/5), y: (Game.🚀2.sprite.position.y - Game.🚀1.sprite.position.y)/5))
+        }
+        
+    }
+    
+    func starship2Move() {
         Game.🚀2.setSpeed(CGPoint(x: -25, y: -25))
-        println(Game.🚀2.sprite)
+        Game.🚀2.move()
     }
 }
