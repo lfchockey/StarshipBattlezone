@@ -62,12 +62,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         starship1Score.text = String(Game.🚀1.life)
         starship1Score.fontSize = 24
-        starship1Score.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame) + 20);
+        starship1Score.position = CGPoint(x: CGRectGetMaxX(self.frame) - 40, y:CGRectGetMaxY(self.frame) - 40);
         self.addChild(starship1Score)
         
         starship2Score.text = String(Game.🚀2.life)
         starship2Score.fontSize = 24
-        starship2Score.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
+        starship2Score.position = CGPoint(x: CGRectGetMaxX(self.frame) - 40, y:CGRectGetMaxY(self.frame) - 80);
         self.addChild(starship2Score)
         
 
@@ -218,8 +218,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
         else if starshipName == Game.🚀2.sprite.name {
-            // Starship2 scores
-            Game.🚀2.life -= 1
             
             // Check to see if Game is over
             gameOverCheck()
@@ -245,6 +243,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
                 }
             }
+            // Starship1 scores
+            Game.🚀2.life -= 1
         }
 
     }
