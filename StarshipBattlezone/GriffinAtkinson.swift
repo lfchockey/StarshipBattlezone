@@ -14,12 +14,12 @@ import Darwin
 class GriffinAtkinson: NSObject, gameSceneDelegate {
     
     func starship1Move() {
-        Game.🚀1.setSpeed(CGPoint(x: 25, y: 25))
+        Game.🚀1.setSpeed(CGPoint(x: 0, y: 0))
         Game.🚀1.move()
     }
     
     func starship2Move() {
-        Game.🚀2.setSpeed(CGPoint(x: -25, y: 25))
+        Game.🚀2.setSpeed(CGPoint(x: 0, y: 0))
         Game.🚀2.move()
     }
 }

@@ -27,7 +27,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var player1Delegate:gameSceneDelegate?
     var player2Delegate:gameSceneDelegate?
     
+    var updatesCalled = 0
+    var gameOver = false
+    
     override func didMoveToView(view: SKView) {
+        // Display the name of the players
+        let p1Node = childNodeWithName("lblPlayer1Name") as SKLabelNode
+        let p2Node = childNodeWithName("lblPlayer2Name") as SKLabelNode
+        p1Node.text = Game.🚀1.name
+        p2Node.text = Game.🚀2.name
         
         setPlayerClasses()
         
@@ -129,32 +137,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             playFireMissileSound()
             //self.addChild(missileSprite)
         }
-        myLabel.text = ""
         
+        if gameOver {
+            // Jump back to main selection screen
+        }
     }
    
     override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
+        if !gameOver {
 
-        myLabel.text = ""
+            myLabel.text = ""
 
-        player1Delegate?.starship1Move()
-        player2Delegate?.starship2Move()
+            player1Delegate?.starship1Move()
+            player2Delegate?.starship2Move()
 
-        for i in 0 ..< Game.🚀1.TOTAL_MISSILES {
-            Game.🚀1.missiles[i].move()
-        }
-        for i in 0 ..< Game.🚀2.TOTAL_MISSILES {
-            Game.🚀2.missiles[i].move()
+            for i in 0 ..< Game.🚀1.TOTAL_MISSILES {
+                Game.🚀1.missiles[i].move()
+            }
+            for i in 0 ..< Game.🚀2.TOTAL_MISSILES {
+                Game.🚀2.missiles[i].move()
+            }
+            
+            updatesCalled++
+            updateScores()
         }
         
-        updateScores()
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
+        // This is needed in order to prevent a single contact to be registered multiple times.
+        // println("didBeginContact: (\(contact.contactPoint.x), \(contact.contactPoint.y)), \(updatesCalled)")
+        if(updatesCalled == 0) {return} // No real change since last call
+        updatesCalled = 0
+        
         let firstNode = contact.bodyA.node as SKSpriteNode
         let secondNode = contact.bodyB.node as SKSpriteNode
-        
+        //println(secondNode.position.x)
         //println("\(firstNode.name) - \(secondNode.name)")
         
         
@@ -172,12 +190,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if ((contact.bodyA.categoryBitMask == ColliderType.Starship2.rawValue ) && (contact.bodyB.categoryBitMask == ColliderType.Missile1.rawValue)) {
-            
-            //println("\(firstNode.name) hit \(secondNode.name)")
-            hitDetected(firstNode.name!, missileName: secondNode.name!)
-            //println(Game.🚀1.missiles)
-            //contact.bodyB.node?.removeFromParent()
-            
+            //if (secondNode.position.x >= 0) || (secondNode.position.y >= 0){
+                
+                //println("\(firstNode.name) hit \(secondNode.name)")
+                hitDetected(firstNode.name!, missileName: secondNode.name!)
+                //println(Game.🚀1.missiles)
+                //contact.bodyB.node?.removeFromParent()
+            //}
         }
         else if ((contact.bodyA.categoryBitMask == ColliderType.Missile1.rawValue ) && (contact.bodyB.categoryBitMask == ColliderType.Starship2.rawValue)) {
             
@@ -185,13 +204,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
         
-        /*
-        // Ship bullet hit an invader
-        [self runAction:[SKAction playSoundFileNamed:@"InvaderHit.wav" waitForCompletion:NO]];
-        [contact.bodyA.node removeFromParent];
-        [contact.bodyB.node removeFromParent];
-*/
-        
+
     }
     
     func hitDetected(starshipName: String, missileName: String){
@@ -267,20 +280,41 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func gameOverCheck(){
+        var tie = false
         
+        // Starship2 wins
         if Game.🚀1.life <= 0 {
-            // Starship2 wins
-            
-            // Stop the update function
+            gameOver = true
+            if Game.🚀2.life <= 0 {
+                tie = true
+            }
         }
-        else if Game.🚀2.life <= 0 {
-            // Starship1 wins
-            
+        else if Game.🚀2.life <= 0 { // Starship2 wins
+            gameOver = true
+            if Game.🚀1.life <= 0 {
+                tie = true
+            }
         }
+        
+        if gameOver {
+            
+            let GVC = GameViewController()
+
+            self.scene?.paused = true
+            Game.🚀1.sprite.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+            Game.🚀2.sprite.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+            let alertController = UIAlertController(title: "iOScreator", message:
+                "Hello, world!", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+            self.view?.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+            // Show message on who won
+            // Write message to file
+        }
+        
     }
     
     func setPlayerClasses() {
-        println(Game.🚀1.name)
+        //println(Game.🚀1.name)
         if Game.🚀1.name == "Starship-Mr Black" {
             player1Delegate = MrBlack()
         }

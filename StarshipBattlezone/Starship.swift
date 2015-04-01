@@ -65,12 +65,12 @@ class Starship {
         
         if self.playerNumber == 1 {
             self.sprite.position.x = self.viewSize.x/2
-            self.sprite.position.y = 100
+            self.sprite.position.y = self.viewSize.y - 100
             self.sprite.name = "Starship1"
         }
         else {
             self.sprite.position.x = self.viewSize.x/2
-            self.sprite.position.y = self.viewSize.y - 100
+            self.sprite.position.y = 100
             self.sprite.zRotation = CGFloat(M_PI)
             self.sprite.name = "Starship2"
         }
