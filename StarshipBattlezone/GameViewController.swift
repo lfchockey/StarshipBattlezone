@@ -43,6 +43,7 @@ class GameViewController: UIViewController {
             /* Set the scale mode to scale to fit the window */
             scene.scaleMode = .AspectFill
             
+            scene.viewController = self
             skView.presentScene(scene)
         }
     }
@@ -66,5 +67,9 @@ class GameViewController: UIViewController {
 
     override func prefersStatusBarHidden() -> Bool {
         return true
+    }
+    
+    func moveToMenu() {
+        self.performSegueWithIdentifier("Menu", sender: nil)
     }
 }

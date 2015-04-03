@@ -8,6 +8,7 @@
 
 import UIKit
 import SpriteKit
+import AVFoundation
 
 // Create the global 'Game' variables we'll be using throughout the game.
 struct Game {
@@ -21,6 +22,8 @@ struct Game {
     static let starship2Category : UInt32 = 0x02
     static let missile2Category : UInt32 = 0x04
     static let worldCategory : UInt32 = 0x08
+    
+    
 }
 
 enum ColliderType: UInt32 {
@@ -91,7 +94,7 @@ class PlayerPickerViewController: UIViewController, UIPickerViewDelegate {
         var studentSelected = Game.students[row]
         
         // Map the image names to the textures array. Each of these is an individual file stored in the playground package
-        let textures: [SKTexture] = Game.students.map { SKTexture(imageNamed: "Starship-\($0)") }
+        //let textures: [SKTexture] = Game.students.map { SKTexture(imageNamed: "Starship-\($0)") }
         
         //println(textures)
 

@@ -18,6 +18,7 @@ protocol missileSound {
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    var viewController: GameViewController? // This pointer is needed to create segue back to PPVC after gameOver
     
     let myLabel = SKLabelNode(fontNamed:"Chalkduster")
     let starship1Score = SKLabelNode(fontNamed: "Chalkduster")
@@ -29,11 +30,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var updatesCalled = 0
     var gameOver = false
+    var gameStarted = false
     
     override func didMoveToView(view: SKView) {
+        self.scene?.paused = true
         // Display the name of the players
+        
         let p1Node = childNodeWithName("lblPlayer1Name") as SKLabelNode
         let p2Node = childNodeWithName("lblPlayer2Name") as SKLabelNode
+        
         p1Node.text = Game.🚀1.name
         p2Node.text = Game.🚀2.name
         
@@ -126,6 +131,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         //println(touches)
+        gameStarted = true
+        myLabel.text = ""
+        self.scene?.paused = false
         
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
@@ -144,10 +152,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
    
     override func update(currentTime: CFTimeInterval) {
-        if !gameOver {
-
-            myLabel.text = ""
-
+        if !gameOver && gameStarted {
+            myLabel.text = String(Game.🚀2.life)
             player1Delegate?.starship1Move()
             player2Delegate?.starship2Move()
 
@@ -276,39 +282,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func playFireMissileSound() {
-        self.runAction(SKAction.playSoundFileNamed("missile.mp3", waitForCompletion: true))
+        self.runAction(SKAction.playSoundFileNamed("missile.mp3", waitForCompletion: false))
     }
     
     func gameOverCheck(){
         var tie = false
-        
+        var gameOverMessage = ""
         // Starship2 wins
         if Game.🚀1.life <= 0 {
             gameOver = true
+            gameOverMessage = "\(Game.🚀2.life) - \(Game.🚀2.name) (Winner) \(Game.🚀1.name) - \(Game.🚀1.life) (Loser)"
             if Game.🚀2.life <= 0 {
                 tie = true
+                gameOverMessage = "Tie game"
             }
         }
         else if Game.🚀2.life <= 0 { // Starship2 wins
             gameOver = true
+            gameOverMessage = "\(Game.🚀1.life) - \(Game.🚀1.name) (Winner) \(Game.🚀2.name) - \(Game.🚀2.life) (Loser)"
             if Game.🚀1.life <= 0 {
                 tie = true
+                gameOverMessage = "Tie game"
             }
         }
+        //gameOverMessage = "\(Game.🚀1.life)"
         
         if gameOver {
-            
+            gameStarted = false
             let GVC = GameViewController()
 
             self.scene?.paused = true
             Game.🚀1.sprite.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
             Game.🚀2.sprite.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-            let alertController = UIAlertController(title: "iOScreator", message:
-                "Hello, world!", preferredStyle: UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
-            self.view?.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+            let alertController = UIAlertController(title: "iOScreator", message: gameOverMessage, preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Main Menu", style: UIAlertActionStyle.Default,handler: nil))
+            //self.view?.window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+            self.viewController?.presentViewController(alertController, animated: true, completion: nil)
+            self.viewController?.moveToMenu()
+            //self.viewController?.performSegueWithIdentifier("Menu", sender: nil)
             // Show message on who won
-            // Write message to file
+            //myLabel.text = "Hello" //gameOverMessage
+            // Segue back to playerPicker ViewController
+
         }
         
     }

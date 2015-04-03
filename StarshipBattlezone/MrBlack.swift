@@ -39,7 +39,7 @@ class MrBlack: NSObject, gameSceneDelegate {
         Game.🚀1.move()
         
         if counter % 10 == 0 {
-            //Game.🚀1.fire(CGPoint(x: ((Game.🚀2.sprite.position.x - Game.🚀1.sprite.position.x)/5), y: (Game.🚀2.sprite.position.y - Game.🚀1.sprite.position.y)/5))
+            Game.🚀1.fire(CGPoint(x: ((Game.🚀2.sprite.position.x - Game.🚀1.sprite.position.x)/5), y: (Game.🚀2.sprite.position.y - Game.🚀1.sprite.position.y)/5))
         }
         
     }
