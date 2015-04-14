@@ -36,8 +36,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.scene?.paused = true
         // Display the name of the players
         
-        let p1Node = childNodeWithName("lblPlayer1Name") as SKLabelNode
-        let p2Node = childNodeWithName("lblPlayer2Name") as SKLabelNode
+        let p1Node = childNodeWithName("lblPlayer1Name") as! SKLabelNode
+        let p2Node = childNodeWithName("lblPlayer2Name") as! SKLabelNode
         
         p1Node.text = Game.🚀1.name
         p2Node.text = Game.🚀2.name
@@ -129,7 +129,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         //println(touches)
         gameStarted = true
         myLabel.text = ""
@@ -176,8 +176,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if(updatesCalled == 0) {return} // No real change since last call
         updatesCalled = 0
         
-        let firstNode = contact.bodyA.node as SKSpriteNode
-        let secondNode = contact.bodyB.node as SKSpriteNode
+        let firstNode = contact.bodyA.node as! SKSpriteNode
+        let secondNode = contact.bodyB.node as! SKSpriteNode
         //println(secondNode.position.x)
         //println("\(firstNode.name) - \(secondNode.name)")
         

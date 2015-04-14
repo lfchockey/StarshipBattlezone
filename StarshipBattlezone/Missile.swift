@@ -22,7 +22,7 @@ class Missile {
     var angle: Float = 0.0
     var playerNumber = 0
     var missileAnimation = [SKTexture]()
-    let audioPlayer = AVAudioPlayer()
+    var audioPlayer = AVAudioPlayer()
     let missileSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("missile", ofType: "mp3")!)
     var error:NSError?
     
