@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 
-
+// This extension sets up the connection of the GameScene and places it inside of the GameViewController
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
         if let path = NSBundle.mainBundle().pathForResource(file as String, ofType: "sks") {
@@ -26,11 +26,13 @@ extension SKNode {
     }
 }
 
+
 class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // if we have a GameScene.sks file
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             // Configure the view.
             let skView = self.view as! SKView
@@ -43,13 +45,14 @@ class GameViewController: UIViewController {
             /* Set the scale mode to scale to fit the window */
             scene.scaleMode = .AspectFill
             
+            // Let the GameScene know which ViewController it belongs to
             scene.viewController = self
             skView.presentScene(scene)
         }
     }
 
     override func shouldAutorotate() -> Bool {
-        return true
+        return false
     }
 
     override func supportedInterfaceOrientations() -> Int {
