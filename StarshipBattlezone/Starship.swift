@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 import SpriteKit
 import Darwin
-import AVFoundation
+
 
 class Starship {
     // Declare properties of a Starship
@@ -28,16 +28,11 @@ class Starship {
     var imageName = ""
     var playerNumber = 0
     var angle: Float = 0.0
-    let audioPlayer = AVAudioPlayer()
-    let missileSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("missile", ofType: "mp3")!)
-    var error:NSError?
+    
 
     
     // Constructor
     init(playerNum: Int) {
-        audioPlayer = AVAudioPlayer(contentsOfURL: missileSound, error: &error)
-        audioPlayer.prepareToPlay()
-        audioPlayer.volume = 0.4
         
         // Set the player number of each Starship
         self.playerNumber = playerNum
@@ -53,7 +48,7 @@ class Starship {
 
         sprite = SKSpriteNode(imageNamed: imageName)            
         
-        sprite.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: imageName), size: sprite.size) // hard-coding this line with a cgsize makes the missiles fly?
+        sprite.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: imageName), size: sprite.size) 
         if let physics = sprite.physicsBody {
             physics.affectedByGravity = false
             physics.allowsRotation = false
@@ -198,7 +193,7 @@ class Starship {
                 var gunPosition =  sprite.childNodeWithName("gun")!.convertPoint(CGPointZero, toNode: sprite.parent!)
                 missiles[i].setSpeed(missileSpeed, newPosition: gunPosition)
                 missiles[i].isBeingFired = true
-                audioPlayer.play()
+
                 break
             }
         }

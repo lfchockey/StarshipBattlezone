@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SpriteKit
 import Darwin
-
+import AVFoundation
 
 class Missile {
     var speed = CGPoint(x: 0, y: 0)
@@ -22,6 +22,9 @@ class Missile {
     var angle: Float = 0.0
     var playerNumber = 0
     var missileAnimation = [SKTexture]()
+    let audioPlayer = AVAudioPlayer()
+    let missileSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("missile", ofType: "mp3")!)
+    var error:NSError?
     
     init (playerNum: Int) {
         sprite = SKSpriteNode(imageNamed:"Missile1")
@@ -29,6 +32,10 @@ class Missile {
         self.sprite.yScale = 0.5
        
         self.playerNumber = playerNum
+        
+        audioPlayer = AVAudioPlayer(contentsOfURL: missileSound, error: &error)
+        audioPlayer.prepareToPlay()
+        audioPlayer.volume = 0.4
         
     }
     
@@ -102,6 +109,7 @@ class Missile {
         self.sprite.zRotation = CGFloat(angle)
         self.sprite.position = newPosition
         self.sprite.physicsBody?.velocity = CGVector(dx: self.speed.x, dy: self.speed.y)
+        audioPlayer.play()
     }
     
     

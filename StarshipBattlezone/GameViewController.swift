@@ -70,6 +70,6 @@ class GameViewController: UIViewController {
     }
     
     func moveToMenu() {
-        self.performSegueWithIdentifier("Menu", sender: nil)
+        //self.performSegueWithIdentifier("Menu", sender: nil)
     }
 }

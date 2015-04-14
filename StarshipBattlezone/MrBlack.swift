@@ -12,13 +12,10 @@ import SpriteKit
 import Darwin
 
 
-class MrBlack: NSObject, gameSceneDelegate {
-    override var description : String {return "I am a Mr. Black"}
-    var counter = 0
+class MrBlack: gameSceneDelegate {
+    //override var description : String {return "I am a Mr. Black"}
     
-//    required override init() {
-//        super.init()
-//    }
+    var counter = 0 // Counts the number of times the update function has run
     
     func starship1Move() {
         counter++
@@ -34,6 +31,9 @@ class MrBlack: NSObject, gameSceneDelegate {
         }
         else if counter < 400 {
             Game.🚀1.setSpeed(CGPoint(x: 25, y: -25))
+        }
+        else {
+            counter = 0
         }
         
         Game.🚀1.move()
