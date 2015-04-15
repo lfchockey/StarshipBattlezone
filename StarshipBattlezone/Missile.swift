@@ -125,6 +125,7 @@ class Missile {
         if (self.isBeingFired) {
             //  Check to see if missile goes off the Scene
             if (self.sprite.position.x < 0 || self.sprite.position.x > self.viewSize.x || self.sprite.position.y < 0 || self.sprite.position.y > self.viewSize.y) {
+                // Move the missile off the screen until it is ready to be fired again.
                 self.isBeingFired = false
                 self.sprite.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
                 self.sprite.position = CGPoint(x: -50, y: -50)

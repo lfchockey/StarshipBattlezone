@@ -23,7 +23,7 @@ class Starship {
     var missiles: [Missile] = []
     var missileNumber = 0
     let TOTAL_MISSILES = 10
-    var life = 20
+    var life: Int = 20
     var name = ""
     var imageName = ""
     var playerNumber = 0
@@ -97,6 +97,11 @@ class Starship {
     // A function that returns the speed of Starship
     func getSpeed() -> CGPoint {
         return self.speed
+    }
+    
+    // A function that returns the speed of Starship
+    func getPosition() -> CGPoint {
+        return self.sprite.position
     }
     
     // A function that sets a new speed/direction of a Starship
